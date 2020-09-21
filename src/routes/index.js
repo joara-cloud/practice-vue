@@ -12,7 +12,7 @@ export const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: NewsView
+      redirect: '/news'
     },
     {
       path: '/news',
