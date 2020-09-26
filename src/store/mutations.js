@@ -5,6 +5,9 @@ export default {
   SET_ASK(state, asks) {
     state.asks = asks;
   },
+  SET_ASKVIEW(state, askview) {
+    state.askview = askview;
+  },
   SET_JOBS(state, jobs) {
     state.jobs = jobs;
   },

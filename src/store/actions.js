@@ -1,4 +1,4 @@
-import { fetchNewsList, fetchAskList, fetchJobsList, fetchUserList } from '../api/index.js';
+import { fetchNewsList, fetchAskList, fetchJobsList, fetchUserList, fetchAskViewList } from '../api/index.js';
 
 export default {
   FETCH_NEWS(context) {
@@ -14,6 +14,15 @@ export default {
     fetchAskList()
       .then(response => {
         context.commit('SET_ASK', response.data)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  FETCH_ASKVIEW(context, itemid) {
+    fetchAskViewList(itemid)
+      .then(response => {
+        context.commit('SET_ASKVIEW', response.data)
       })
       .catch(err => {
         console.log(err);

@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
   state: {
     news: [],
     asks: [],
+    askview: [],
     jobs: [],
     user: []
   },
