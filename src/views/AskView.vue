@@ -3,16 +3,15 @@
 
   <b-jumbotron>
 
-    <h2>title : {{this.$store.state.askview.title}}</h2>
-    <span>user : {{this.$store.state.askview.user}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <span>time ago : {{this.$store.state.askview.time_ago}}</span>
+    <h4>title : {{this.$store.state.askview.title}}<b-badge>{{this.$store.state.askview.comments_count}}</b-badge></h4>
+    <div class="d-flex w-100 justify-content-between">
+      <span><small class="text-muted">by</small> {{this.$store.state.askview.user}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <small class="text-muted">{{this.$store.state.askview.time_ago}}</small>
+    </div>
 
-    <p>comments count : {{this.$store.state.askview.comments_count}}</p>
     <hr class="my-4">
 
     <div><span v-html="this.$store.state.askview.content"></span></div>
-    <!-- <b-button variant="primary" href="#">Do Something</b-button>
-    <b-button variant="success" href="#">Do Something Else</b-button> -->
   </b-jumbotron>
 
   </div>

@@ -21,8 +21,11 @@ export default {
 </script>
 
 <style>
+body dl, body ol, body ul {margin-top:0;margin-bottom:0}
+body h3 {font-size:18px}
+body a {color:#222}
 .list > li {padding:14px 8px;border-bottom:1px solid #eee}
 .list > li p {display:inline-block;margin:0;font-size:14px}
-.list > li a {font-weight:bold;letter-spacing:-0.5px;text-decoration:underline;color:#222}
+.list > li a {font-weight:bold;letter-spacing:-0.5px;color:#222}
 .list .user {margin-right:15px}
 </style>
