@@ -1,17 +1,15 @@
 <template>
   <div>
 
-    <b-list-group>
-
-
-      <b-list-group-item href="#" class="flex-column align-items-start" v-for="(ask, i) in this.$store.state.asks" v-bind:key="i">
-          <h3><router-link v-bind:to="`askview/${ask.id}`">{{ask.title}}</router-link></h3>
-          <div class="d-flex w-100 justify-content-between">
-            <small class="text-muted">by {{ask.user}}</small>
-            <small class="text-muted">{{ask.time_ago}}</small>
-          </div>
-      </b-list-group-item>
-    </b-list-group>
+    <ul class="list">
+      <li href="#" class="align-items-start" v-for="(ask, i) in this.$store.state.asks" v-bind:key="i">
+        <router-link v-bind:to="`askview/${ask.id}`">{{ask.title}}</router-link>
+        <div class="d-flex justify-content-between">
+          <small>by <router-link v-bind:to="`/user/${ask.user}`" class="etc_link">{{ask.user}}</router-link></small>
+          <small class="text-muted">{{ask.time_ago}}</small>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
