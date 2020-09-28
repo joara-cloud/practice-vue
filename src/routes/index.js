@@ -26,7 +26,7 @@ export const router = new VueRouter({
       name: 'ask',
     },
     {
-      path: '/c/:id',
+      path: '/askview/:id',
       component: AskView,
     },
     {

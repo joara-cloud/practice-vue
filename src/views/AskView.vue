@@ -25,10 +25,4 @@ export default {
     this.$store.dispatch('FETCH_ASKVIEW', itemid);
   }
 }
-// { "id": 24599793, "title": "MVVM and Databinding for Unity3d", "points": 2, "user": "loxodon", "time": 1601136413, "time_ago": "38 minutes ago", "type": "link", "content": "<p>MVVM &amp; Databinding for Unity3d<p>Loxodon.Framework is a powerful tool for your game development. It helps you make games more easily. It has a powerful data binding features and completely separates your game view and game logic. Don&#x27;t you try?<p>https:&#x2F;&#x2F;github.com&#x2F;vovgou&#x2F;loxodon-framework", "comments": [], "comments_count": 0, "url": "item?id=24599793" }
-
 </script>
-
-<style>
-
-</style>
