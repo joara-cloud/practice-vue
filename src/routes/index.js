@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router';
 import NewsView from '../views/NewsView.vue';
+import AskList from '../views/AskList.vue';
 import AskView from '../views/AskView.vue';
 import JobsView from '../views/JobsView.vue';
 import UserView from '../views/UserView.vue';
@@ -12,23 +13,30 @@ export const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: NewsView
+      redirect: '/news'
     },
     {
       path: '/news',
       component: NewsView,
+      name: 'news',
     },
     {
       path: '/ask',
+      component: AskList,
+      name: 'ask',
+    },
+    {
+      path: '/askview/:id',
       component: AskView,
     },
     {
       path: '/jobs',
       component: JobsView,
+      name: 'jobs',
     },
     {
-      path: '/user',
+      path: '/user/:id',
       component: UserView,
-    }    
+    }
   ]
 });

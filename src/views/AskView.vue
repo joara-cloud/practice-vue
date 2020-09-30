@@ -1,28 +1,42 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(ask, i) in asks" v-bind:key="i">{{ ask.title }}</li>
-    </ul>
+
+  <b-jumbotron>
+
+    <h4>title : {{userInfo.title}}
+      <b-badge>{{userInfo.comments_count}}</b-badge>
+    </h4>
+    <user-profile class="d-flex w-100 justify-content-between">
+      <router-link slot="username" v-bind:to="`/user/${userInfo.user}`">
+        by {{userInfo.user}}
+      </router-link>
+      <p slot="time">{{userInfo.time_ago}}</p>
+    </user-profile>
+
+    <hr class="my-4">
+
+    <div><span v-html="userInfo.content"></span></div>
+  </b-jumbotron>
+
   </div>
 </template>
 
+
 <script>
-import {fetchAskList} from '../api/index.js';
+import UserProfile from '../components/UserProfile.vue';
 
 export default {
-  data() {
-    return {
-      asks: []
+  components: {
+    UserProfile
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.askview;
     }
   },
   created() {
-    fetchAskList() // 여기에서 return new Promise() 가 되기 때문에 then으로 연결 가능!!
-      .then(res => this.asks = res.data) // 화살표 함수를 쓰게 되면 
-      .catch(err => console.log(err));
+    const itemid = this.$route.params.id;
+    this.$store.dispatch('FETCH_ASKVIEW', itemid);
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -1,33 +1,20 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(user, i) in users" v-bind:key="i">{{user.title}}</li>
-    </ul>
+    <list-item></list-item>
   </div>
 </template>
 
 <script>
-import { fetchNewsList } from '../api/index.js';
+import ListItem from '../components/ListItem';
+import bus from '../utils/bus.js';
 
 export default {
-  data() {
-    return {
-      users: []
-    }
+  components: {
+    ListItem
   },
   created() {
-    const vm = this;
-    fetchNewsList()
-      .then(function(response) {
-        vm.users = response.data;
-      })
-      .catch(function(err) {
-        console.log(err);
-      })
+    bus.$emit('start:spinner');
+    bus.$emit('end:spinner');
   }
 }
 </script>
-
-<style>
-
-</style>

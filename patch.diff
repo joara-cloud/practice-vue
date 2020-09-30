@@ -1,0 +1,220 @@
+From f88049eeed1b216f991c830375c81563e018c18a Mon Sep 17 00:00:00 2001
+From: ara <joarario92@gmail.com>
+Date: Sat, 26 Sep 2020 21:21:26 +0900
+Subject: [PATCH] Practice Vuex
+
+---
+ src/main.js            |  5 ++--
+ src/store/index.js     | 53 ++++++++++++++++++++++++++++++++++++++++++
+ src/views/AskView.vue  | 18 +++-----------
+ src/views/JobsView.vue | 23 +++---------------
+ src/views/NewsView.vue | 23 +++---------------
+ 5 files changed, 65 insertions(+), 57 deletions(-)
+ create mode 100644 src/store/index.js
+
+diff --git a/src/main.js b/src/main.js
+index d55f53f..649c562 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -1,11 +1,12 @@
+ import Vue from 'vue'
+ import App from './App.vue';
+ import {router} from './routes/index.js';
+-
++import {store} from './store/index.js';
+ 
+ Vue.config.productionTip = false
+ 
+ new Vue({
+   render: h => h(App),
+-  router
++  router,
++  store
+ }).$mount('#app')
+diff --git a/src/store/index.js b/src/store/index.js
+new file mode 100644
+index 0000000..428e64d
+--- /dev/null
++++ b/src/store/index.js
+@@ -0,0 +1,53 @@
++import Vue from 'vue'
++import Vuex from 'vuex'
++import { fetchNewsList, fetchAskList, fetchJobsList } from '../api/index.js';
++
++Vue.use(Vuex);
++
++export const store = new Vuex.Store({
++  state: {
++    news: [],
++    asks: [],
++    jobs: []
++  },
++  mutations: {
++    SET_NEWS(state, news) {
++      state.news = news;
++    },
++    SET_ASK(state, asks) {
++      state.asks = asks;
++    },
++    SET_JOBS(state, jobs) {
++      state.jobs = jobs;
++    }
++  },
++  actions: {
++    FETCH_NEWS(context) {
++      fetchNewsList()
++        .then(response => {
++          context.commit('SET_NEWS', response.data)
++        })
++        .catch(err => {
++          console.log(err);
++        });
++    },
++    FETCH_ASK(context) {
++      fetchAskList()
++        .then(response => {
++          context.commit('SET_ASK', response.data)
++        })
++        .catch(err => {
++          console.log(err);
++        });
++    },
++    FETCH_JOBS(context) {
++      fetchJobsList()
++        .then(response => {
++          context.commit('SET_JOBS', response.data)
++        })
++        .catch(err => {
++          console.log(err);
++        });
++    }
++  }
++});
+\ No newline at end of file
+diff --git a/src/views/AskView.vue b/src/views/AskView.vue
+index ceef226..360a883 100644
+--- a/src/views/AskView.vue
++++ b/src/views/AskView.vue
+@@ -1,28 +1,16 @@
+ <template>
+   <div>
+     <ul>
+-      <li v-for="(ask, i) in asks" v-bind:key="i">{{ ask.title }}</li>
++      <li v-for="(ask, i) in this.$store.state.asks" v-bind:key="i">{{ ask.title }}</li>
+     </ul>
+   </div>
+ </template>
+ 
+ <script>
+-import {fetchAskList} from '../api/index.js';
+ 
+ export default {
+-  data() {
+-    return {
+-      asks: []
+-    }
+-  },
+   created() {
+-    fetchAskList() // 여기에서 return new Promise() 가 되기 때문에 then으로 연결 가능!!
+-      .then(res => this.asks = res.data) // 화살표 함수를 쓰게 되면 
+-      .catch(err => console.log(err));
++    this.$store.dispatch('FETCH_ASK');
+   }
+ }
+-</script>
+-
+-<style>
+-
+-</style>
+\ No newline at end of file
++</script>
+\ No newline at end of file
+diff --git a/src/views/JobsView.vue b/src/views/JobsView.vue
+index 4812afd..d7e1816 100644
+--- a/src/views/JobsView.vue
++++ b/src/views/JobsView.vue
+@@ -1,33 +1,16 @@
+ <template>
+   <div>
+     <ul>
+-      <li v-for="(job, i) in jobs" v-bind:key="i">{{ job.title }}</li>
++      <li v-for="(job, i) in this.$store.state.jobs" v-bind:key="i">{{ job.title }}</li>
+     </ul>
+   </div>
+ </template>
+ 
+ <script>
+-import { fetchJobsList } from '../api/index.js';
+ 
+ export default {
+-  data() {
+-    return {
+-      jobs: []
+-    }
+-  },
+   created() {
+-    const vm = this;
+-    fetchJobsList()
+-      .then(function(res) {
+-        vm.jobs = res.data;
+-      })
+-      .catch(function(err) {
+-        console.log(err);
+-      })
++    this.$store.dispatch('FETCH_JOBS');
+   }
+ }
+-</script>
+-
+-<style>
+-
+-</style>
+\ No newline at end of file
++</script>
+\ No newline at end of file
+diff --git a/src/views/NewsView.vue b/src/views/NewsView.vue
+index e0351b9..6ecfa74 100644
+--- a/src/views/NewsView.vue
++++ b/src/views/NewsView.vue
+@@ -1,33 +1,16 @@
+ <template>
+   <div>
+     <ul>
+-      <li v-for="(user, i) in users" v-bind:key="i">{{user.title}}</li>
++      <li v-for="(item, i) in this.$store.state.news" v-bind:key="i">{{item.title}}</li>
+     </ul>
+   </div>
+ </template>
+ 
+ <script>
+-import { fetchNewsList } from '../api/index.js';
+ 
+ export default {
+-  data() {
+-    return {
+-      users: []
+-    }
+-  },
+   created() {
+-    const vm = this;
+-    fetchNewsList()
+-      .then(function(response) {
+-        vm.users = response.data;
+-      })
+-      .catch(function(err) {
+-        console.log(err);
+-      })
++    this.$store.dispatch('FETCH_NEWS');
+   }
+ }
+-</script>
+-
+-<style>
+-
+-</style>
+\ No newline at end of file
++</script>
+\ No newline at end of file
+-- 
+2.28.0.windows.1
+
