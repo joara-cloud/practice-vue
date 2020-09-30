@@ -4,15 +4,40 @@
     <transition name="fade">
       <router-view></router-view>
     </transition>
+    <spinner v-bind:loading="loadingState"></spinner>
   </div>  
 </template>
 
 <script>
 import Gnb from './components/Gnb.vue';
+import Spinner from './components/Spinner.vue';
+import bus from './utils/bus.js';
 
 export default {
   components: {
-    Gnb
+    Gnb,
+    Spinner
+  },
+  data() {
+    return {
+      loadingState: false
+    }
+  },
+  methods: {
+    startSpinner() {
+      return this.loadingState = true;
+    },
+    endSpinner() {
+      return this.loadingState = false;
+    }
+  },
+  created() {
+    bus.$on('start:spinner', this.startSpinner);
+    bus.$on('end:spinner', this.endSpinner);
+  },
+  beforeDestroy() {
+    bus.$off('start:spinner', this.startSpinner);
+    bus.$off('end:spinner', this.endSpinner);    
   }
 }
 </script>

@@ -37,6 +37,6 @@ export const router = new VueRouter({
     {
       path: '/user/:id',
       component: UserView,
-    }    
+    }
   ]
 });
